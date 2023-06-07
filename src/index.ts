@@ -1,6 +1,5 @@
 import { randomUUID } from "crypto";
-import test from "node:test";
-
+import { backEndResponse } from "./back";
 class User {
   id: string
   constructor(
@@ -24,21 +23,33 @@ type UserJSON = {
   pass: string;
 }
 
-const response = {
-  body: [
-    {
-      "id": "any_uid",
-      "name": "any_name",
-      "email": "any_mail",
-      "pass": "any_pass",
-    }
-  ],
-};
 
-const teste = () => {
-  const users = response.body.map((user) => User.fromJSON(user));
+const a = User.fromJSON({
+  id: "algum id",
+  email: "email@teste.com",
+  pass: "alguma senha",
+  name: "fulano de tal",
+});
+
+
+
+const get = async (url: string): Promise<{
+  body: {
+    id: string;
+    name: string;
+    email: string;
+    pass: string;
+  }[];
+}> => {
+  return backEndResponse;
+}
+
+const requisicao = async () => {
+  const result = await get('/users');
+  const arrayComObjetoComUsuarios = result.body;
+  const users = arrayComObjetoComUsuarios.map((user) => User.fromJSON(user))
 
   console.log(users);
 }
 
-teste();
+requisicao();
